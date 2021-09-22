@@ -20,7 +20,7 @@ public class monthYuanShi
             } else {
                 AllJiuChan = jiuChan / 75;
             }
-            int yuanShi = 3120;
+            int yuanShi = (90 + 10 * 4 + 20) * 30 + 300;
             int allYuanShi = yuanShi * time;
             int allChouKa = ((time * yuanShi) / 160) + AllJiuChan;
 //        double possibility = 0.0006;
