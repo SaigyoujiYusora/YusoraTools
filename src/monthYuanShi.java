@@ -16,13 +16,14 @@ public class monthYuanShi
             Scanner input = new Scanner(System.in);
             System.out.println("请输入能攒的时间");
             String inputTime = input.next();
-            int days = 0;
+            int days = 0;//天数
             int year = 0;int month = 0;int day = 0;
             for (int i = 0; i == 0; ) {
                 String tempTime;
+                //时间解析
                 if (inputTime.matches("exit")){
                     break exitPosition;
-                } else if (inputTime.matches(".*[Yy].*")) {
+                } else if (inputTime.matches(".*[Yy].*")) {//年
                     if (inputTime.contains("Y")) {
                         tempTime = inputTime.substring(0, inputTime.indexOf("Y"));
                     } else {
@@ -31,7 +32,7 @@ public class monthYuanShi
                     inputTime = inputTime.substring(tempTime.length() + 1);
                     days = days + 365 * Integer.parseInt(tempTime);
                     year = Integer.parseInt(tempTime);
-                } else if (inputTime.matches(".*[Mm].*")) {
+                } else if (inputTime.matches(".*[Mm].*")) {//月
                     if (inputTime.contains("M")) {
                         tempTime = inputTime.substring(0, inputTime.indexOf("M"));
                     } else {
@@ -40,7 +41,7 @@ public class monthYuanShi
                     inputTime = inputTime.substring(tempTime.length() + 1);
                     days = days + 30 * Integer.parseInt(tempTime);
                     month = Integer.parseInt(tempTime);
-                } else if (inputTime.matches(".*[Dd].*")) {
+                } else if (inputTime.matches(".*[Dd].*")) {//日
                     if (inputTime.contains("D")) {
                         tempTime = inputTime.substring(0, inputTime.indexOf("D"));
                     } else {
@@ -50,7 +51,7 @@ public class monthYuanShi
                     days = days + Integer.parseInt(tempTime);
                     day = Integer.parseInt(tempTime);
                     i = 1;
-                }else if(inputTime.matches("^[0-9]\\d*$")) {
+                }else if(inputTime.matches("^[0-9]\\d*$")) {//纯数字天数
                     days = Integer.parseInt(inputTime);
                     for (int tempDate = days; tempDate >= 31; ) {
                         if (tempDate >= 365) {
@@ -65,12 +66,41 @@ public class monthYuanShi
                     }
                     i = 1;
 //                }else if(inputTime.matches("")){
-                }else if(inputTime.isEmpty()){
+                }else if(inputTime.isEmpty()){//跳出循环
                     i = 1;
                 }else {
                     System.out.println("输入错误，请重新输入");
                     inputTime = input.next();
                 }
+            }
+            System.out.println("是否购买了月卡");
+            int monthCardDays = 0;//月卡剩余天数
+            int monthCardExtra = 0;
+            if (input.next().equals("Y")) {
+                System.out.print("月卡剩余时间");
+                String inputTemp = input.next();
+                for (int i = 0; i <= 5; ) {
+                    if (inputTemp.matches("^[0-9]\\d*$")) {
+                        monthCardDays = Integer.parseInt(inputTemp);
+                    } else {
+                        System.out.println("输入错误，请重新输入");
+                        i++;
+                        System.out.print("月卡剩余时间");
+                        inputTemp = input.next();
+                    }
+                    if (i == 5) {
+                        System.out.println("耍👴玩呢？");
+                        i--;
+                    }
+                }
+            } else{
+                System.out.println("月卡未购买");
+            }
+            System.out.println("是否自动购买月卡");
+            if (input.next().matches(".*[Yy].*")){
+                monthCardExtra = (days - monthCardDays) / 30 * 300;
+            } else{
+                System.out.println("您选择不购买月卡");
             }
             System.out.println("请输入现有的星尘");
             int xingChen = input.nextInt();
@@ -81,7 +111,7 @@ public class monthYuanShi
             } else {
                 JiuChan = xingChen / 75;
             }
-            int allYuanShi = (90 + 10 * 4 + 20) * days;
+            int allYuanShi = (10 * 4 + 20) * days + monthCardDays * 90 + monthCardExtra;//总原石
             allYuanShi = allYuanShi + (days / 30 * 300);
 //            int allYuanShi = allYuanShi * days;
             int allChouKa = (allYuanShi / 160) + JiuChan;
