@@ -1,3 +1,5 @@
+package xyz.saigyouji.genshintools;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
