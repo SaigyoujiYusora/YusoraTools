@@ -8,7 +8,20 @@ import java.awt.event.WindowEvent;
 
 public class YSFrame {
     public static void main(String[] args) {
-        Frame Mainframe =new Frame("原神小工具");
+        new MainFrame("原神小工具");
+    }
+}
+class MainFrame extends Frame {
+    public MainFrame(String title) {
+        super(title);//标题
+
+
+        //窗口大小背景
+        setLayout(new FlowLayout(FlowLayout.CENTER));
+        setSize(400, 400);
+        setBackground(new Color(253, 253, 253));
+        setVisible(true);
+
 
         Button button = new Button();
         CalculateButton calculateButton = new CalculateButton();
@@ -30,17 +43,8 @@ public class YSFrame {
         textZone.add(YS_input);
 
 //            add(button,BorderLayout.CENTER);
-        Mainframe.add(MainPanel,BorderLayout.CENTER);
-    }
-}
-class MainFrame extends Frame {
-    public MainFrame(String title) {
-        super(title);//标题
+        add(MainPanel,BorderLayout.CENTER);
 
-        setLayout(new FlowLayout(FlowLayout.CENTER));
-        setSize(400, 400);
-        setBackground(new Color(253, 253, 253));
-        setVisible(true);
         //listing mouse click exit button to exit
         addWindowListener(new WindowAdapter() {
             @Override
