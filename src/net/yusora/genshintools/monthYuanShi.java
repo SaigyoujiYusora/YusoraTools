@@ -1,4 +1,4 @@
-package xyz.saigyouji.genshintools;
+package net.yusora.genshintools;
 //import java.util.Objects;
 //import java.util.Properties;
 import java.util.Scanner;

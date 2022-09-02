@@ -1,4 +1,4 @@
-package xyz.saigyouji.genshintools;
+package net.yusora.genshintools;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

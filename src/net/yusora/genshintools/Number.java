@@ -1,4 +1,4 @@
-package xyz.saigyouji.genshintools;
+package net.yusora.genshintools;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
