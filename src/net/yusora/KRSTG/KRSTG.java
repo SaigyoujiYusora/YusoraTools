@@ -13,6 +13,7 @@ public class KRSTG {
         File file = new File(path+"\\out\\output.txt");
 
         File inputFile = new File(path+"\\out\\input.txt");
+/*
         //read file
         try {
             FileInputStream inputStream = new FileInputStream(inputFile);
@@ -23,68 +24,103 @@ public class KRSTG {
         } catch (Exception e) {
             e.printStackTrace();
         }
+*/
 
-        System.out.print(inputString);
+            //read file V2
+            Long fileLength = inputFile.length(); // 获取文件长度
+            byte[] fileContent = new byte[fileLength.intValue()];
+            try
+            {
+                FileInputStream in = new FileInputStream(inputFile);
+                in.read(fileContent);
+                in.close();
+            } catch (FileNotFoundException e)
+            {
+                e.printStackTrace();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
 
+            String[] fileContentArr = new String(fileContent).split("\r\n");
+            int arrCount=0;
+            inputString = fileContentArr[arrCount];
+//            int arrLength = fileContentArr.length;
+            int arrLength = fileContentArr.length;
+
+//        System.out.print(inputString);
+        int jumpOut = 0;
         while (true) {
             //a scanner can input text
 //            Scanner input = new Scanner(System.in);
 //            String inputString = input.nextLine();
 
-
-
-//        for (int i = 0; i != 1; i++) {
-            if (Objects.equals(inputString, "exit")) {
+            if (jumpOut==1) {
                 break;
             }
-            String outputString = null;
-            String tempString = null;
-            int jumpOut = 0;
+            String outputString = "";
+
             while (true) {
 
-
-                if (jumpOut==1&tempString==null){
-                    break;
-                }
-                if (!(tempString != null & jumpOut != 0)) {
-                    tempString = inputString;
-                    jumpOut++;
-                }
-
-                //Get the first line of the string from inputString and store the rest of the string in temp
-                if (tempString.contains("\n")) {
-//                if (tempString != null) {
-                    outputString = tempString.substring(0, inputString.indexOf("\n"));
-                    tempString = tempString.substring(inputString.indexOf("\n") + 1);
-                }else {
-                    outputString = tempString;
-                }
-//            tempString = inputString.substring(0, inputString.indexOf("\r\n"));
-                outputString = outputString.replaceAll("-", "");
-//            outputString = inputString.replaceAll("-", "");
-                outputString = outputString.replaceAll("\"", "");
-                outputString = outputString.replaceAll("\s", "");
-                System.out.println("if(dnsDomainIs(host, " + outputString + ")){return 'DIRECT'}");
-                //write outputString to file
-                try {
-                    FileOutputStream fos = null;
-                    if (!file.exists()) {
-                        file.createNewFile();//如果文件不存在，就创建该文件
-                        fos = new FileOutputStream(file);//首次写入获取
-                    } else {
-                        //如果文件已存在，那么就在文件末尾追加写入
-                        fos = new FileOutputStream(file, true);
+                if (!(inputString.contains("#"))) {
+                    if (arrCount == arrLength & jumpOut == 1) {
+                        break;
                     }
 
-                    OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);//指定以UTF-8格式写入文件
-                    osw.write("if(dnsDomainIs(host, " + outputString + ")){return 'DIRECT'}");
+                    outputString = inputString;
+                    outputString = outputString.replaceAll("-", "");
+                    outputString = outputString.replaceAll("\"", "");
+                    outputString = outputString.replaceAll("\s", "");
+//                    System.out.println("if(dnsDomainIs(host, " + outputString + ")){return 'DIRECT'}");
+                    //write outputString to file
+                    try {
+                        FileOutputStream fos = null;
+                        if (!file.exists()) {
+                            file.createNewFile();//如果文件不存在，就创建该文件
+                            fos = new FileOutputStream(file);//首次写入获取
+                        } else {
+                            //如果文件已存在，那么就在文件末尾追加写入
+                            fos = new FileOutputStream(file, true);
+                        }
 
-                    osw.write("\r\n");
-                    osw.close();
-                } catch (Exception e) {
+                        OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);//指定以UTF-8格式写入文件
+                        osw.write("if(dnsDomainIs(host, " + outputString + ")){return 'DIRECT'}");//写入的字符串
 
-                    e.printStackTrace();
+                        osw.write("\r\n");
+                        osw.close();
+                    } catch (Exception e) {
+
+                        e.printStackTrace();
+                    }
+                } else {
+                    inputString = inputString.replaceAll("#" , "//");
+                    try {
+                        FileOutputStream fos = null;
+                        if (!file.exists()) {
+                            file.createNewFile();//如果文件不存在，就创建该文件
+                            fos = new FileOutputStream(file);//首次写入获取
+                        } else {
+                            //如果文件已存在，那么就在文件末尾追加写入
+                            fos = new FileOutputStream(file, true);
+                        }
+
+                        OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);//指定以UTF-8格式写入文件
+                        osw.write(inputString);//写入的字符串
+
+                        osw.write("\r\n");
+                        osw.close();
+                    } catch (Exception e) {
+
+                        e.printStackTrace();
+                    }
                 }
+                arrCount++;
+                if (arrCount == arrLength) {
+                    jumpOut++;
+                    break;
+                }
+                inputString = fileContentArr[arrCount];
+
             }
         }
     }
