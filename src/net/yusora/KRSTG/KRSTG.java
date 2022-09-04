@@ -84,7 +84,7 @@ public class KRSTG {
                         }
 
                         OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);//指定以UTF-8格式写入文件
-                        osw.write("if(dnsDomainIs(host, " + outputString + ")){return 'DIRECT'}");//写入的字符串
+                        osw.write("if(dnsDomainIs(host, '" + outputString + "')){return 'DIRECT'}");//写入的字符串
 
                         osw.write("\r\n");
                         osw.close();
